@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  age       Int
+  gender    String?
+  photo     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  interests UserInterest[]
+  stories   Story[]
+  settings  UserSetting?
+}
+
+model UserInterest {
+  id       String @id @default(uuid())
+  userId   String
+  interest String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Story {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  prompt    String
+  storyText String
+  genre     String?
+  style     String?
+  language  String   @default("ar")
+  duration  String?
+  status    String   @default("draft")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  scenes Scene[]
+}
+
+model Scene {
+  id          String  @id @default(uuid())
+  storyId     String
+  sceneNumber Int
+  sceneText   String
+  imagePrompt String?
+  imagePath   String?
+  audioPath   String?
+
+  story Story @relation(fields: [storyId], references: [id], onDelete: Cascade)
+}
+
+model UserSetting {
+  id         String  @id @default(uuid())
+  userId     String  @unique
+  modelName  String  @default("llama3.2")
+  language   String  @default("ar")
+  theme      String  @default("light")
+  artStyle   String  @default("pixar")
+  ttsVoice   String?
+  ttsEnabled Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
