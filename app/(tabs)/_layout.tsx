@@ -1,4 +1,4 @@
-import "global-css";
+import "../../global.css";
 import { Tabs } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 import { COLORS } from "@/constants";
