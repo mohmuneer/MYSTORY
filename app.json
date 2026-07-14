@@ -8,6 +8,15 @@
     "owner": "mohammed5577",
     "android": {
       "package": "com.mohammed5577.mystory"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "ios": {
+      "bundleIdentifier": "com.mohammed5577.mystory",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     }
   }
 }
