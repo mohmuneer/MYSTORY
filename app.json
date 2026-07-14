@@ -5,6 +5,9 @@
         "projectId": "d669a30a-fe5b-40b1-96e3-8089130fff5b"
       }
     },
-    "owner": "mohammed5577"
+    "owner": "mohammed5577",
+    "android": {
+      "package": "com.mohammed5577.mystory"
+    }
   }
 }
