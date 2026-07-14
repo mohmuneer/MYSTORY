@@ -1,15 +1,12 @@
-import { drizzle } from "drizzle-orm/expo-sqlite";
-import { openDatabaseSync } from "expo-sqlite";
-import * as schema from "./schema";
+import { openDatabaseSync, type SQLiteDatabase } from "expo-sqlite";
 
 const DB_NAME = "mystory.db";
 
-let _db: ReturnType<typeof drizzle<typeof schema>> | null = null;
+let _db: SQLiteDatabase | null = null;
 
-export function getDatabase() {
+export function getDatabase(): SQLiteDatabase {
   if (!_db) {
-    const sqlite = openDatabaseSync(DB_NAME, { enableChangeListener: true });
-    _db = drizzle(sqlite, { schema });
+    _db = openDatabaseSync(DB_NAME);
   }
   return _db;
 }
@@ -18,9 +15,7 @@ export async function initializeDatabase() {
   try {
     const db = getDatabase();
 
-    const sqlite = openDatabaseSync(DB_NAME);
-
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS users (
         id TEXT PRIMARY KEY NOT NULL,
         name TEXT NOT NULL,
@@ -31,7 +26,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS user_interests (
         id TEXT PRIMARY KEY NOT NULL,
         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -39,7 +34,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS characters (
         id TEXT PRIMARY KEY NOT NULL,
         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -54,7 +49,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS story_series (
         id TEXT PRIMARY KEY NOT NULL,
         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -65,7 +60,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS stories (
         id TEXT PRIMARY KEY NOT NULL,
         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -85,7 +80,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS scenes (
         id TEXT PRIMARY KEY NOT NULL,
         story_id TEXT NOT NULL REFERENCES stories(id) ON DELETE CASCADE,
@@ -97,7 +92,7 @@ export async function initializeDatabase() {
       );
     `);
 
-    sqlite.execSync(`
+    db.execSync(`
       CREATE TABLE IF NOT EXISTS settings (
         id TEXT PRIMARY KEY NOT NULL,
         user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -109,10 +104,7 @@ export async function initializeDatabase() {
         tts_voice TEXT
       );
     `);
-
-    return db;
   } catch (error) {
     console.warn("Database initialization error:", error);
-    return getDatabase();
   }
 }
