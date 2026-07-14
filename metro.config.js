@@ -9,7 +9,8 @@ config.resolver.extraNodeModules = {
 
 config.resolver.blockList = [
   ...(Array.isArray(config.resolver.blockList) ? config.resolver.blockList : []),
-  /expo-sqlite[\\/]web/,
+  /expo-sqlite[/\\]web/,
+  /expo-sqlite[/\\].*\.web\./,
 ];
 
 module.exports = config;
