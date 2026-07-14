@@ -1,4 +1,3 @@
-import "../global.css";
 import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -19,7 +18,6 @@ export default function RootLayout() {
       style={{
         flex: 1,
         backgroundColor: COLORS.background,
-        direction: isRTL ? "rtl" : "ltr",
       }}
     >
       <StatusBar style={isDarkMode ? "light" : "dark"} />
