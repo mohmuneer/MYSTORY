@@ -1,16 +1,20 @@
 import { useEffect } from "react";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { View } from "react-native";
+import { View, Text } from "react-native";
 import { useAppStore } from "@/stores/appStore";
 import { initializeDatabase } from "@/database";
 import { COLORS } from "@/constants";
 
 export default function RootLayout() {
-  const { isDarkMode, isRTL } = useAppStore();
+  const { isDarkMode } = useAppStore();
 
   useEffect(() => {
-    initializeDatabase();
+    try {
+      initializeDatabase();
+    } catch (e) {
+      console.warn("DB init failed:", e);
+    }
   }, []);
 
   return (

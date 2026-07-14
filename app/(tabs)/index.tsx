@@ -32,7 +32,7 @@ export default function HomeScreen() {
         >
           <Text style={styles.actionEmoji}>✨</Text>
           <Text style={styles.actionTitle}>قصة جديدة</Text>
-          <Text style={styles.actionDesc">ابدأ من الصفر</Text>
+          <Text style={styles.actionDesc}>ابدأ من الصفر</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
