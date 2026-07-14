@@ -6,17 +6,26 @@
     "orientation": "portrait",
     "scheme": "mystory",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "favicon": "./assets/favicon.png",
     "android": {
       "package": "com.mohammed5577.mystory",
-      "versionCode": 1
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#0f0720",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      }
     },
     "ios": {
       "bundleIdentifier": "com.mohammed5577.mystory",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "icon": "./assets/icon.png"
     },
     "web": {
       "bundler": "metro",
-      "output": "static"
+      "output": "static",
+      "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router",
